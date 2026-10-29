@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!-- Replaced by `flutter build web --base-href`. Must start and end with "/". -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Muslim Soul · Prayer times, Adhan and Qibla</title>
+  <meta name="description" content="Muslim Soul is a calm, beautiful Android app for accurate prayer times, the Adhan, the Qibla compass, the Quran, duas, nearby mosques and more, in 12 languages.">
+  <meta name="theme-color" content="#F7F3FF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#07041A" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="dark light">
+
+  <!--
+    TODO(launch): replace https://example.com with the production origin in
+    the canonical link and both image URLs below (crawlers need absolute URLs).
+  -->
+  <link rel="canonical" href="https://example.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Muslim Soul">
+  <meta property="og:title" content="Muslim Soul · Prayer times, Adhan and Qibla">
+  <meta property="og:description" content="Accurate prayer times, a gentle Adhan, the Qibla, the Quran and your daily duas, in one calm Android app.">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Muslim Soul logo, a mihrab arch, on a violet gradient">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Muslim Soul · Prayer times, Adhan and Qibla">
+  <meta name="twitter:description" content="Accurate prayer times, a gentle Adhan, the Qibla, the Quran and your daily duas, in one calm Android app.">
+  <meta name="twitter:image" content="https://example.com/og-image.png">
+
+  <!-- Icons and PWA -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Muslim Soul">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body { margin: 0; height: 100%; background: #07041A; }
+    @media (prefers-color-scheme: light) { html, body { background: #F7F3FF; } }
+    #splash {
+      position: fixed; inset: 0; display: grid; place-items: center;
+    }
+    #splash img {
+      width: 72px; height: 72px; border-radius: 20px;
+      animation: breathe 1.6s ease-in-out infinite;
+    }
+    @keyframes breathe { 50% { opacity: .55; transform: scale(.94); } }
+    @media (prefers-reduced-motion: reduce) { #splash img { animation: none; } }
+    noscript p {
+      font: 16px/1.5 system-ui, sans-serif; color: #A39DC9;
+      text-align: center; padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div id="splash" aria-hidden="true"><img src="icons/Icon-192.png" alt=""></div>
+  <noscript><p>Muslim Soul needs JavaScript to run. Please enable it and reload.</p></noscript>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
