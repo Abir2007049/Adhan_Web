@@ -106,6 +106,17 @@ void main() {
     expect(p.isGlass, isTrue);
   });
 
+  test('light-mode primary buttons carry white labels', () {
+    // PEARL's accent is a light peach by design, so its labels are dark.
+    for (final id in PaletteId.values.where((id) => id != PaletteId.pearl)) {
+      expect(
+        id.resolve(Brightness.light).onAccent,
+        const Color(0xFFFFFFFF),
+        reason: id.storageKey,
+      );
+    }
+  });
+
   test('light-hero palettes put dark text on the hero', () {
     for (final (id, brightness) in [
       (PaletteId.pearl, Brightness.light),

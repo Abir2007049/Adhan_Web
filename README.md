@@ -29,6 +29,10 @@ Firebase `"rewrites": [{"source": "**", "destination": "/index.html"}]`, Netlify
 `/* /index.html 200`, nginx `try_files $uri /index.html;`. If you serve from a
 sub-path, build with `--base-href /sub/path/`.
 
+For the `--wasm` build, the host must also serve `.mjs` files as
+`text/javascript` and `.wasm` files as `application/wasm`. Most hosts do this
+already; a server that sends `text/plain` leaves the page stuck on the splash.
+
 ## What's where
 
 ```
@@ -121,33 +125,38 @@ backdrop blur on cards. Opaque ones draw flat.
 5. Run `flutter test`. `palette_contrast_test.dart` checks the new palette against
    WCAG AA, and the mapping test fails until step 3 is done.
 
-### Contrast adjustments
+### Palette refinement
 
-The brief asks for WCAG AA: 4.5:1 for `fg`/`fgMuted` on `bg` and every elevated
-surface, and for `onHero` on both hero gradient stops. These tokens failed with the
-supplied values and were nudged. Only lightness changed (hue kept), and only as far
-as needed to pass. Each is marked `// AA: was …` in `palettes.dart`.
+The palette values are **refined versions** of the Android app's palettes. Every
+palette keeps its hue family, but the shades were tuned for a calmer, more
+professional look on large screens:
 
-| Palette | Mode | Token | Was | Now | Ratio |
-| --- | --- | --- | --- | --- | --- |
-| GREEN | dark + light | `heroFrom` | `0xFF22C55E` | `0xFF178841` | white 2.28 → 4.53 |
-| ROSE | dark | `heroFrom` | `0xFFFF6FB5` | `0xFFE70070` | white 2.56 → 4.53 |
-| PINK | dark + light | `heroFrom` | `0xFFEC4899` | `0xFFE2177B` | white 3.53 → 4.52 |
-| PURPLE | dark + light | `heroFrom` | `0xFFA855F7` | `0xFF9F44F6` | white 3.96 → 4.53 |
-| PEARL | dark | `onHero` | `fg` (`0xFFFFF4EE`) | `0xFF2A1014` | 1.00 → 8.50 (light hero needs dark text) |
-| GREEN | light | `fgMuted` | `0xFF3A6B4E` | `0xFF39694D` | on `bgElev3` 4.41 → 4.53 |
-| PINK | light | `fgMuted` | `0xFF8A3A5E` | `0xFF893A5D` | on `bgElev3` 4.48 → 4.51 |
+- **Dark canvases** are near-black with a faint tint of the palette's hue
+  (VIOLET `0xFF07041A` → `0xFF0B0A19`), instead of a saturated near-black.
+- **Light canvases** are near-white. Surfaces step up in small tinted increments
+  instead of saturated washes (GREEN light `bg` was mint `0xFFDCFCE7`, now
+  `0xFFF4F9F5`; its `bgElev3` was `0xFF86EFAC`, now `0xFFD9EBE0`).
+- **Heroes** run from a deep jewel tone to a darker shade of the same family
+  (GREEN `0xFF22C55E` → `0xFF1A7F46`, PINK `0xFFEC4899` → `0xFFC2306F`,
+  VIOLET `0xFF7C3AED` → `0xFF6D4AE0`).
+- **Text** is a tinted neutral, and **borders** are low-alpha ink rather than
+  colored lines.
+- **Accents** sit one step less saturated than the raw brand color (VIOLET's sky
+  accent `0xFF38BDF8` → `0xFF4FB3E8`).
+- The page's ambient glows and hero shadows are also softer.
 
-`onHeroMuted` (white at 72%) can't reach 4.5:1 on most heroes without becoming
-`onHero`. So it is held to the **3:1 large-text** threshold and used only for large
-text (the 22 px Arabic prayer name on the Salah card). All small text on a hero uses
-`onHero`. Four palettes needed a higher alpha to reach 3:1:
+Because heroes are deeper and canvases cleaner, every palette now passes WCAG AA
+as designed, with no per-token contrast nudges. `palette_contrast_test.dart`
+enforces 4.5:1 for `fg`/`fgMuted` on `bg` and each elevated surface, for `onHero`
+on both hero stops and for button labels on the accent, plus 3:1 for the focus
+ring. If you want the app and the site to match exactly, port the values in
+`lib/core/theme/palettes.dart` back to the app (or the reverse, and re-run the
+tests).
 
-| Palette | Mode | `onHeroMuted` | Ratio |
-| --- | --- | --- | --- |
-| ROSE | dark | `0xC5FFFFFF` (77%) | 2.76 → 3.04 |
-| PINK | dark + light | `0xC0FFFFFF` (75%) | 2.87 → 3.04 |
-| DUSK | light | `0xBBFFFFFF` (73%) | 2.99 → 3.05 |
+`onHeroMuted` (the hero text color at 72%) is held to the **3:1 large-text**
+threshold and used only for large text (the 22 px Arabic prayer name on the Salah
+card). All small text on a hero uses `onHero`. PEARL keeps a light hero in dark
+mode, so its `onHero` there is dark ink rather than `fg`.
 
 `fgFaint` is decorative (dividers, inactive markers) and is not used for readable text.
 
@@ -244,5 +253,3 @@ translation.
 - Live regions announce demo results and errors.
 - `test/layout_smoke_test.dart` renders every page at 360, 800 and 1440 px in all
   12 languages and fails on any overflow.
-#   A d h a n _ W e b  
- 

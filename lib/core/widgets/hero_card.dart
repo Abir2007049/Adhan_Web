@@ -26,10 +26,10 @@ class HeroCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: shape,
         gradient: p.heroGradient,
-        border: Border.all(color: p.onHero.withValues(alpha: 0.12)),
+        border: Border.all(color: p.onHero.withValues(alpha: 0.10)),
         boxShadow: [
           BoxShadow(
-            color: p.heroFrom.withValues(alpha: p.isDark ? 0.28 : 0.22),
+            color: p.heroFrom.withValues(alpha: p.isDark ? 0.20 : 0.14),
             blurRadius: 48,
             offset: const Offset(0, 20),
           ),
@@ -67,7 +67,7 @@ class _HeroSheenPainter extends CustomPainter {
     final glow = Paint()
       ..shader =
           RadialGradient(
-            colors: [ink.withValues(alpha: 0.16), ink.withValues(alpha: 0)],
+            colors: [ink.withValues(alpha: 0.10), ink.withValues(alpha: 0)],
           ).createShader(
             Rect.fromCircle(
               center: Offset(size.width * 0.5, 0),
@@ -96,7 +96,7 @@ class _HeroSheenPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.2
-        ..color = ink.withValues(alpha: 0.10),
+        ..color = ink.withValues(alpha: 0.07),
     );
   }
 

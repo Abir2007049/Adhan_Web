@@ -10,7 +10,7 @@ class AmbientBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    final strength = p.isDark ? 1.0 : 0.6;
+    final strength = p.isDark ? 1.0 : 0.5;
     Widget glow(Alignment at, Color color, double alpha) => Positioned.fill(
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -30,9 +30,9 @@ class AmbientBackground extends StatelessWidget {
         color: p.bg,
         child: Stack(
           children: [
-            glow(const Alignment(-0.7, -1.1), p.heroFrom, 0.30),
-            glow(const Alignment(1.1, 0.2), p.accent, 0.10),
-            glow(const Alignment(-0.9, 1.2), p.heroTo, 0.22),
+            glow(const Alignment(-0.7, -1.1), p.heroFrom, 0.20),
+            glow(const Alignment(1.1, 0.2), p.accent, 0.06),
+            glow(const Alignment(-0.9, 1.2), p.heroTo, 0.16),
           ],
         ),
       ),
